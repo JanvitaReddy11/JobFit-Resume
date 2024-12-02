@@ -25,6 +25,4 @@ JobFit Resume aims to address this issue of users manually tailoring the resume 
 
 ### Steps:
 
-1] Run the requirements.txt file (pip install requirements.txt)
-2] Create a dot env file to store groq api key
-3] Run the command: streamlit run app.py
+1] Run the requirements.txt file (pip install requirements.txt)                                                                                                     2] Create a dot env file to store groq api key                                                                                                                      3] Run the command: streamlit run app.py
