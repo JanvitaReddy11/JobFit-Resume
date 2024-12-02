@@ -8,6 +8,7 @@ JobFit Resume aims to address this issue of users manually tailoring the resume 
 
 2] Job Description Analysis:
     Extracts keywords, skills, and requirements from job descriptions into a structured JSON format for easy integration.
+    
 3] Customized Resume Generation:
     Highlights JD-relevant skills while removing irrelevant ones.
     Avoids adding skills not present in the original resume.
@@ -21,3 +22,9 @@ JobFit Resume aims to address this issue of users manually tailoring the resume 
 5] ChatBot Integration
     Uses Langraph for conversational state management.
     Assists users in answering additional application questions, aligning responses with their profile and the JD.
+
+### Steps:
+
+1] Run the requirements.txt file (pip install requirements.txt)
+2] Create a dot env file to store groq api key
+3] Run the command: streamlit run app.py
