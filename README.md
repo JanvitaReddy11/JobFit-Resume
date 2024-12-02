@@ -22,8 +22,7 @@ JobFit Resume aims to address this issue of users manually tailoring the resume 
 5] ChatBot Integration
     Uses Langraph for conversational state management.
     Assists users in answering additional application questions, aligning responses with their profile and the JD.
-
-### Steps:
+    
 ### Steps to Run
 
 1. Install dependencies: `pip install -r requirements.txt`.  
