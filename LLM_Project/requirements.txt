@@ -7,3 +7,4 @@ groq
 langchain-google-community
 langchain-groq
 langgraph
+fpdf

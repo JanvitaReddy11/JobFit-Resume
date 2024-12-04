@@ -13,13 +13,12 @@ api_key = os.getenv('GROQ_API_KEY')
 client = Groq(api_key=api_key)
 
 class PDF(FPDF):
-    """Custom PDF class to handle cover letter formatting."""
+
     def header(self):
-        # Only add the "Cover Letter" heading on the first page
         if self.page_no() == 1:
             self.set_font('Arial', 'B', 14)
             self.cell(0, 12, 'Cover Letter', align='C', ln=1)
-            self.ln(10)  # Add some space after the heading
+            self.ln(10) 
 
 def generate_cover_letter(job_description: dict, resume: dict) -> None:
     client = Groq(api_key=api_key)
@@ -55,8 +54,6 @@ def generate_cover_letter(job_description: dict, resume: dict) -> None:
             stream=False,
             stop=None,
         )
-
-        # Extract the generated cover letter
         if completion.choices and completion.choices[0].message:
             cover_letter = completion.choices[0].message.content
 
@@ -77,7 +74,6 @@ def generate_cover_letter(job_description: dict, resume: dict) -> None:
             for line in cover_letter.splitlines():
                 pdf.multi_cell(0, 5, line, border=0, align='J')
 
-            # Save the PDF
             output_file = "cover_letter.pdf"
             pdf.output(output_file)
 
