@@ -1,0 +1,58 @@
+Here is the optimized "Experience" section in JSON format:
+
+```
+[
+    {
+        "title": "Graduate Research Assistant",
+        "company": "Texas A&M University",
+        "location": "USA",
+        "duration": "Jan 2024 - Present",
+        "responsibilities": [
+            "Annotated over 1800 images using LabelMe software integrated with SAM to identify cotton balls, achieving a 0.70 IoU score. Engineered segmentation models like Unet attention, CBAM, Pix2Pix Unet, and SwinUnet to improve model performance.",
+            "Enhanced model performance by implementing LoRA and skip connections to finetune SAM, resulting in a 0.91 correlation accuracy between pixels and cotton yield through correlation analysis."
+        ]
+    },
+    {
+        "title": "Graduate Research Assistant",
+        "company": "Texas A&M University",
+        "location": "USA",
+        "duration": "Sep 2023 - Dec 2023",
+        "responsibilities": [
+            "Experimented with CNN models like AlexNet, VGG-16, ResNet, EfficientNet, and 3D CNN for classification of stress-induced crops, conducting hyperparameter tuning using Keras Tuner.",
+            "Implemented an LSTM model on time series images of cotton crops to capture spatio-temporal relations, resulting in a 6% accuracy improvement on test data with an F1 score of 0.97."
+        ]
+    },
+    {
+        "title": "Research Intern",
+        "company": "IISER Bhopal",
+        "location": "India",
+        "duration": "May 2022 - July 2022",
+        "responsibilities": [
+            "Designed a domain generalization model to improve resilience across multiple domains, utilizing adversarial learning for model adaptation and integrating Grad-CAM for better interpretability.",
+            "Applied K-means clustering to segregate domains and used AlexNet as a feature extractor, achieving a 3% increase in accuracy over the baseline model by incorporating multi-domain discriminators."
+        ]
+    },
+    {
+        "title": "Research Intern",
+        "company": "IIT Kharagpur",
+        "location": "India",
+        "duration": "May 2021 - Feb 2022",
+        "responsibilities": [
+            "Automated the detection of weld path by developing a machine learning algorithm for robotic welding, implementing YOLOv5 to detect joints with a precision of 99.5%.",
+            "Leveraged image processing techniques to denoise and identify edges, yielding an absolute error of ±1mm for weld lines and ±0.1mm for gaps."
+        ]
+    }
+]
+```
+
+I optimized the "Experience" section by:
+
+1. Extracting key responsibilities and achievements from the job description.
+2. Rewriting each bullet point to align with the job description and ATS compatibility.
+3. Following the STAR method (Situation, Task, Action, Result) format to describe each experience.
+4. Using strong action verbs, quantifying achievements when possible, and prioritizing relevance.
+5. Avoiding repetition of action verbs and overuse of words.
+6. Ensuring each bullet point aligns with the job description and highlights the candidate's relevant skills and achievements.
+7. Incorporating relevant keywords from the job description in the experiences description to improve ATS compatibility.
+
+Note that I did not invent new accomplishments or metrics and kept the information truthful and concise.

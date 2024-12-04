@@ -1,0 +1,175 @@
+{
+    "name": "Janvita Reddy",
+    "contact": {
+        "phone": "979-709-1497",
+        "email": "reddyjanvita11@gmail.com",
+        "linkedin": "linkedin.com/in/janvita/",
+        "github": "github.com/JanvitaReddy11"
+    },
+    "education": [
+        {
+            "degree": "MS in Data Science",
+            "major": "Data Science",
+            "institution": "Texas A&M University",
+            "location": "College Station, TX, USA",
+            "duration": "Aug 23 - May 25",
+            "cgpa": "4.0/4.0"
+        },
+        {
+            "degree": "B.Tech in Mechanical Engineering",
+            "major": "Mechanical Engineering",
+            "institution": "Sardar Vallabhbhai National Institute of Technology",
+            "location": "Surat, India",
+            "duration": "Aug 19 - May 23",
+            "cgpa": "9.21/10.0"
+        }
+    ],
+    "skills": {
+        "Programming Languages": [
+            "C++",
+            "Python",
+            "R",
+            "SQL",
+            "MATLAB"
+        ],
+        "ML Libraries": [
+            "NumPy",
+            "Matplotlib",
+            "Pandas",
+            "Pytorch",
+            "Keras",
+            "OpenCV",
+            "TensorFlow",
+            "Scikit",
+            "Seaborn",
+            "NLTK"
+        ],
+        "Models": [
+            "Regression",
+            "SVM",
+            "KNN",
+            "Decision Trees",
+            "Neural Networks",
+            "Transformers",
+            "Autoencoders",
+            "GANs",
+            "LLMs"
+        ],
+        "Cloud Products": [
+            "GCP Compute Engine",
+            "Cloud storage",
+            "Vertex AI",
+            "BigQuery",
+            "AWS EC2",
+            "AWS S3",
+            "SageMaker"
+        ],
+        "Data Technology": [
+            "Hadoop",
+            "PySpark",
+            "Docker",
+            "Airflow",
+            "Git",
+            "MongoDB",
+            "Tableau",
+            "PowerBI",
+            "Lookup",
+            "Excel"
+        ]
+    },
+    "work experience": [
+        {
+            "title": "Graduate Research Assistant",
+            "company": "Texas A&M University",
+            "location": "USA",
+            "duration": "Jan 24 - Present",
+            "responsibilities": [
+                "Annotated 1800 +images using LabelMe software integrated with SAM to identify cotton balls.",
+                "Engineered segmentation models like Unet attention, CBAM, Pix2Pix Unet, SwinUnet achieving 0.70 IoU score.",
+                "Enhanced model performance by implementing LoRA and skip connections to finetune SAM.",
+                "Conducted correlation analysis between pixels and cotton yield, achieving 0.91 correlation accuracy."
+            ]
+        },
+        {
+            "title": "Graduate Research Assistant",
+            "company": "Texas A&M University",
+            "location": "USA",
+            "duration": "Sep 23 - Dec 23",
+            "responsibilities": [
+                "Experimented with CNN models like AlexNet, VGG-16, ResNet, EfficientNet, 3D CNN for classification of stress induced crops and conducted hyperparameter tuning using keras tuner .",
+                "Implemented LSTM model on time series images of cotton crops to capture spatio-temporal relations, resulting in 6%accuracy improvement on test data, with F1 score of 0.97."
+            ]
+        },
+        {
+            "title": "Research Intern",
+            "company": "IISER Bhopal",
+            "location": "India",
+            "duration": "May 22 - July 22",
+            "responsibilities": [
+                "Designed a domain generalisation model to improve resilence across multiple domains.",
+                "Utilized adversarial learning for model adaptation, integrated with Grad-CAM for better interpretability.",
+                "Applied K-means clustering to segregate domains, and AlexNet as feature extractor.",
+                "Achieved 3 %increase in accuracy over the baseline model by incorporating multi-domain discriminators ."
+            ]
+        },
+        {
+            "title": "Research Intern",
+            "company": "IIT Kharagpur",
+            "location": "India",
+            "duration": "May 21 - Feb 22",
+            "responsibilities": [
+                "Automated the detection of weld path by developing a machine learning algorithm for robotic welding.",
+                "Implemented YOLOv5 to detect joints, attained precision of 99.5 %.",
+                "Leveraged image processing techniques to denoise and identify edges, yielding an absolule error of \u00b11mm for weld lines and \u00b10.1mm for gaps."
+            ]
+        }
+    ],
+    "projects": [
+        {
+            "title": "AI Assistant",
+            "description": [
+                "Developed a personal AI assistant that automates tasks like sending emails, scheduling meetings, performing internet searches, and answering queries from PDFs.",
+                "Leveraged RAG for multi-document querying and context aware responses.",
+                "Integrated specialized agents into a unified master agent using ReAct framework for seamless task execution."
+            ]
+        },
+        {
+            "title": "Reproducing ChatGPT",
+            "description": [
+                "Trained GPT-2 124M model from scratch on FineWeb dataset, revamped HellaSwag accuracy from 0.31 to 0.33.",
+                "Enhancements included replacing LayerNorm with RMSNorm , incorporating Rotary Positional Encodings , and implementing Group Query Attention to optimize multi-head attention."
+            ]
+        },
+        {
+            "title": "Job Recommendation System",
+            "description": [
+                "Offered personalized job recommendations by analyzing users work history.",
+                "Conducted text preprocessing to transform job description and user profile to word2vec embeddings and TF-IDF vector.",
+                "Applied user collaborative filtering, modeled a neural ranker securing 89 %accuracy and hit rate@20 of 0.78."
+            ]
+        },
+        {
+            "title": "Wide Residual Attention Networks",
+            "description": [
+                "Enhanced ResNet model by adding mask attention after residual blocks.",
+                "Applied normalization ,random flipping , and Gaussian noise to training images, achieving 95.4% accuracy on the CIFAR-10 dataset."
+            ]
+        },
+        {
+            "title": "Chicken Disease Classification using MLOps",
+            "description": [
+                "Designed scalable ML solution by integrating pre-trained VGG16 with custom layers.",
+                "Executed data ingestion, training, and evaluation using DVC for pipeline tracking.",
+                "Deployed model using Docker on AWS EC2 , leveraging GitHub Actions for automated CI/CD pipelines"
+            ]
+        },
+        {
+            "title": "Fraud Classification using GCP",
+            "description": [
+                "Collected ans stored employee data in GCS bucket .",
+                "Transformed data, masked sensitive information, using Cloud Data Fusion .",
+                "Created dashboards using Looker and automated ETL process with Airflow ."
+            ]
+        }
+    ]
+}
