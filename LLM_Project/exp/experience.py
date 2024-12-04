@@ -14,7 +14,6 @@ client = Groq(api_key=api_key)
 
 def analyze_exp(candidate_profile: dict, job_description: dict, max_trials: int = 5) -> None:
     client = Groq(api_key=api_key)
-    # Step 1: Define the prompt for optimizing the experience section
     prompt = f"""
     You are an expert resume writer focused on optimizing profiles for ATS (Applicant Tracking System) compliance and job application success. Your task is to enhance the candidate's "Experience" section based on the provided job description:
 
@@ -46,9 +45,8 @@ def analyze_exp(candidate_profile: dict, job_description: dict, max_trials: int 
     """
 
     try:
-        # Step 2: Query the LLM for optimization
         completion = client.chat.completions.create(
-            model="llama3-70b-8192",  # Replace with your model name
+            model="llama3-70b-8192", 
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7,
             max_tokens=2048,
@@ -88,8 +86,6 @@ def analyze_exp(candidate_profile: dict, job_description: dict, max_trials: int 
             return
 
         second_output = second_response.choices[0].message.content
-
-        # Attempt to save the JSON object, retrying up to max_trials
         for attempt in range(max_trials):
             try:
                 extracted_json = json.loads(second_output.strip())
@@ -99,7 +95,7 @@ def analyze_exp(candidate_profile: dict, job_description: dict, max_trials: int 
                 return
             except json.JSONDecodeError:
                 print(f"Trial {attempt + 1}/{max_trials}: Error parsing JSON. Retrying...")
-                time.sleep(1)  # Optional delay before retry
+                time.sleep(1)  
 
         print("Failed to parse and save JSON after maximum retries.")
 

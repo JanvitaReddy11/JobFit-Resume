@@ -9,19 +9,14 @@ from dotenv import load_dotenv
 from langchain_groq import ChatGroq
 import json
 
-# Load environment variables
+
 load_dotenv()
 api_key = os.getenv('GROQ_API_KEY')
 client = Groq(api_key=api_key)
 
-# Initialize the model
-model = ChatGroq(model="llama-3.2-3b-preview")
 
-# Initialize the prompt template
+model = ChatGroq(model="llama-3.2-3b-preview")
 def initialize_prompt_template():
-    """
-    Initialize the chat prompt template with predefined instructions.
-    """
     return ChatPromptTemplate.from_messages(
         [
             ("system",
@@ -35,44 +30,28 @@ def initialize_prompt_template():
         ]
     )
 
-# Initialize the workflow for handling user queries
 def initialize_workflow():
-    """
-    Set up the workflow for handling user queries.
-    """
     workflow = StateGraph(state_schema=MessagesState)
-    prompt_template = initialize_prompt_template()  # Initialize the prompt template
+    prompt_template = initialize_prompt_template()  
 
     def call_model(state: MessagesState):
-        """
-        Function to handle the model invocation for a given state.
-        """
+       
         prompt = prompt_template.invoke(state)
-        response = model.invoke(prompt)  # Replace with your actual model API call
+        response = model.invoke(prompt) 
         return {"messages": response}
 
     workflow.add_edge(START, "model")
     workflow.add_node("model", call_model)
     return workflow
 
-# Compile the application with memory checkpointing
+
 def compile_application():
-    """
-    Compile the application with memory checkpointing.
-    """
     workflow = initialize_workflow()
     memory = MemorySaver()
     return workflow.compile(checkpointer=memory)
 
-# Handle the conversation based on the provided user input and thread ID
 def handle_conversation(user_input, thread_id, resume, job_description, threads,app,config):
-    # Check if thread exists or new context is provided
-    
+  
     context = [HumanMessage(content=user_input)]
-
-    # Invoke the chatbot application
-    
     output = app.invoke({"messages": context}, config)
-
-    # Return the latest response
     return output["messages"][-1].content

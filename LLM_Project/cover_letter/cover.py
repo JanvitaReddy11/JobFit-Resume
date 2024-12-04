@@ -23,12 +23,7 @@ class PDF(FPDF):
 
 def generate_cover_letter(job_description: dict, resume: dict) -> None:
     client = Groq(api_key=api_key)
-    """
-    Generate a personalized cover letter based on a job description and resume.
-    """
-    # Extract candidate name
-    
-    # Define the LLM prompt
+  
     prompt = f"""
     You are an expert cover letter writer. Write a personalized cover letter for the following job description and resume:
 
@@ -51,9 +46,8 @@ def generate_cover_letter(job_description: dict, resume: dict) -> None:
     """
 
     try:
-        # Query the LLM to generate the cover letter
         completion = client.chat.completions.create(
-            model="llama3-70b-8192",  # Replace with your actual model name
+            model="llama3-70b-8192", 
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7,
             max_tokens=2048,
@@ -72,7 +66,6 @@ def generate_cover_letter(job_description: dict, resume: dict) -> None:
             else:
                 cover_letter = cover_letter[start_index:]        
 
-            # Generate a PDF from the cover letter
             pdf = PDF()
             pdf.set_auto_page_break(auto=True, margin=15)
             pdf.add_page()
@@ -80,7 +73,7 @@ def generate_cover_letter(job_description: dict, resume: dict) -> None:
             pdf.set_right_margin(20)
             pdf.set_font('Arial', size=10)
 
-            # Add the cover letter content
+
             for line in cover_letter.splitlines():
                 pdf.multi_cell(0, 5, line, border=0, align='J')
 

@@ -31,9 +31,7 @@ def escape_latex_special_chars(text):
 
 
 def process_json(data):
-    """
-    Recursively processes a JSON object, escaping LaTeX special characters in strings.
-    """
+
     if isinstance(data, dict):
         return {escape_latex_special_chars(key): process_json(value) for key, value in data.items()}
     elif isinstance(data, list):

@@ -21,9 +21,9 @@ def extract_resume_data(pdf_path: str, max_retries=5):
         print(f"Error reading PDF: {e}")
         return None
     
-    # Initialize Groq client
+   
     load_dotenv()
-    # Create the initial prompt for extracting resume details
+   
     prompt = f"""
     Please extract the following information from the resume and format it as JSON with the following keys:
 - Note when ever you come across the duration dont add any special characeters just give like Jan 2023. That much
@@ -41,11 +41,10 @@ Return the result as JSON only, with no additional explanation or formatting.
     {my_resume}
     """
 
-    # Try to get the Groq response with retries
     for attempt in range(max_retries):
         try:
             completion = client.chat.completions.create(
-                model="llama3-70b-8192",  # Replace with the actual model name
+                model="llama3-70b-8192",  
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.7,
                 max_tokens=2048,
@@ -63,7 +62,6 @@ Return the result as JSON only, with no additional explanation or formatting.
                 print("Max retries reached, exiting.")
                 return None
 
-    # Validate and refine JSON response
     prompt2 = f"""
     You are a JSON parser and validator. Your task is to extract only the JSON object from the following text, ensuring it is valid and well-formed. Do not include any additional explanations or comments.
 
@@ -73,8 +71,7 @@ Return the result as JSON only, with no additional explanation or formatting.
     ### Output:
     Provide only the JSON object.
     """
-    
-    # Try to get the second response with retries
+
     for attempt in range(max_retries):
         try:
             completion = client.chat.completions.create(
@@ -96,7 +93,6 @@ Return the result as JSON only, with no additional explanation or formatting.
                 print("Max retries reached, exiting.")
                 return None
 
-    # Save JSON to file
     try:
         json_data = json.loads(second_output)
         with open('resume.json', 'w') as outfile:

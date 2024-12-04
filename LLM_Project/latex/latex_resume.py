@@ -1,10 +1,5 @@
 def latex_resume(candidate_data, output_filename='resume.tex'):
-    """
-    Generates a LaTeX resume file based on candidate data.
-
-    :param candidate_data: Dictionary containing candidate information.
-    :param output_filename: Name of the output LaTeX file.
-    """
+  
     latex_content = r"""
     \documentclass{resume}
 
@@ -63,10 +58,8 @@ def latex_resume(candidate_data, output_filename='resume.tex'):
         latex_content += r"\end{rSubsectionProj}" + "\n"
     latex_content += r"\end{rSection}" + "\n"
 
-    # End LaTeX document
     latex_content += r"\end{document}"
 
-    # Save to LaTeX file
     with open(output_filename, 'w') as file:
         file.write(latex_content)
 

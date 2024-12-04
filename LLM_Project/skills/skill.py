@@ -14,7 +14,6 @@ import time
 
 def analyze_skills(candidate_profile: dict, job_description, max_retries=5) -> None:
     client = Groq(api_key=api_key)
-    # Step 1: Define prompt for the first LLM (Skills and Responsibilities Optimization)
     first_prompt = f"""
     You are a resume optimization expert for ATS compliance. Your task is to enhance the candidate's skills and modify it based on the job description:
 
@@ -43,7 +42,6 @@ def analyze_skills(candidate_profile: dict, job_description, max_retries=5) -> N
     """
 
     try:
-        # Step 2: Query the LLM for the optimized skills section
         first_response = client.chat.completions.create(
             model="llama3-70b-8192",
             messages=[{"role": "user", "content": first_prompt}],
@@ -58,11 +56,7 @@ def analyze_skills(candidate_profile: dict, job_description, max_retries=5) -> N
         if not first_output:
             print("First LLM did not produce a valid response.")
             return
-
-        # Save the first output for review
         
-
-        # Step 3: Retry parsing and saving JSON output up to max_retries times
         for attempt in range(1, max_retries + 1):
             print(f"Attempt {attempt} of {max_retries}...")
 
@@ -92,23 +86,19 @@ def analyze_skills(candidate_profile: dict, job_description, max_retries=5) -> N
                     print("Second LLM did not produce a valid response.")
                     continue
 
-                # Validate the JSON output
                 try:
                     extracted_json = json.loads(second_output.strip())
-                    # Save the JSON file
                     with open("skills.json", "w") as file:
                         json.dump(extracted_json, file, indent=4)
                     print("Optimized skills JSON saved to 'skills.json'.")
-                    return  # Exit loop if successful
+                    return 
                 except json.JSONDecodeError:
                     print("Error parsing JSON from the second LLM response.")
                     print(f"Invalid JSON output: {second_output}")
-                    # Continue to the next attempt
+
 
             except Exception as e:
                 print(f"Error during LLM processing on attempt {attempt}: {e}")
-
-            # Optional: Delay between retries
             time.sleep(1)
 
         print(f"Failed to extract valid JSON after {max_retries} attempts.")
