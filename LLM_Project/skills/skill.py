@@ -42,6 +42,7 @@ def analyze_skills(candidate_profile: dict, job_description, max_retries=5) -> N
     """
 
     try:
+       
         first_response = client.chat.completions.create(
             model="llama3-70b-8192",
             messages=[{"role": "user", "content": first_prompt}],
@@ -56,7 +57,6 @@ def analyze_skills(candidate_profile: dict, job_description, max_retries=5) -> N
         if not first_output:
             print("First LLM did not produce a valid response.")
             return
-        
         for attempt in range(1, max_retries + 1):
             print(f"Attempt {attempt} of {max_retries}...")
 
@@ -86,6 +86,7 @@ def analyze_skills(candidate_profile: dict, job_description, max_retries=5) -> N
                     print("Second LLM did not produce a valid response.")
                     continue
 
+              
                 try:
                     extracted_json = json.loads(second_output.strip())
                     with open("skills.json", "w") as file:
@@ -96,9 +97,9 @@ def analyze_skills(candidate_profile: dict, job_description, max_retries=5) -> N
                     print("Error parsing JSON from the second LLM response.")
                     print(f"Invalid JSON output: {second_output}")
 
-
             except Exception as e:
                 print(f"Error during LLM processing on attempt {attempt}: {e}")
+
             time.sleep(1)
 
         print(f"Failed to extract valid JSON after {max_retries} attempts.")

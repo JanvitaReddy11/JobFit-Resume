@@ -9,14 +9,16 @@ from dotenv import load_dotenv
 from langchain_groq import ChatGroq
 import json
 
-
 load_dotenv()
 api_key = os.getenv('GROQ_API_KEY')
 client = Groq(api_key=api_key)
 
-
 model = ChatGroq(model="llama-3.2-3b-preview")
+
 def initialize_prompt_template():
+    """
+    Initialize the chat prompt template with predefined instructions.
+    """
     return ChatPromptTemplate.from_messages(
         [
             ("system",
@@ -31,11 +33,15 @@ def initialize_prompt_template():
     )
 
 def initialize_workflow():
+    """
+    Set up the workflow for handling user queries.
+    """
     workflow = StateGraph(state_schema=MessagesState)
     prompt_template = initialize_prompt_template()  
-
     def call_model(state: MessagesState):
-       
+        """
+        Function to handle the model invocation for a given state.
+        """
         prompt = prompt_template.invoke(state)
         response = model.invoke(prompt) 
         return {"messages": response}
@@ -46,12 +52,15 @@ def initialize_workflow():
 
 
 def compile_application():
+    """
+    Compile the application with memory checkpointing.
+    """
     workflow = initialize_workflow()
     memory = MemorySaver()
     return workflow.compile(checkpointer=memory)
 
 def handle_conversation(user_input, thread_id, resume, job_description, threads,app,config):
-  
+   
     context = [HumanMessage(content=user_input)]
     output = app.invoke({"messages": context}, config)
     return output["messages"][-1].content

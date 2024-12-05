@@ -21,7 +21,7 @@ def extract_resume_data(pdf_path: str, max_retries=5):
         print(f"Error reading PDF: {e}")
         return None
     
-   
+
     load_dotenv()
    
     prompt = f"""
@@ -33,7 +33,7 @@ def extract_resume_data(pdf_path: str, max_retries=5):
 - "skills" (grouped by type as keys with arrays of values)
 - 
 - "work experience" (an array of objects with "title", "company (only the name of company and not location or country or place)", "location", "duration (In Month Year like Jan 23 format)", "responsibilities (give a list of it whatever is mentioned, do not eliminate words)")
-- "projects" (an array of objects with "title", "description (give a list of it (give a list of it whatever is mentioned, do not eliminate words))")
+- "projects" (an array of objects with "title", "description(give a list of it whatever is mentioned, do not eliminate words))")
 Return the result as JSON only, with no additional explanation or formatting.
 
 
@@ -44,7 +44,7 @@ Return the result as JSON only, with no additional explanation or formatting.
     for attempt in range(max_retries):
         try:
             completion = client.chat.completions.create(
-                model="llama3-70b-8192",  
+                model="llama3-70b-8192", 
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.7,
                 max_tokens=2048,
@@ -71,7 +71,7 @@ Return the result as JSON only, with no additional explanation or formatting.
     ### Output:
     Provide only the JSON object.
     """
-
+    
     for attempt in range(max_retries):
         try:
             completion = client.chat.completions.create(

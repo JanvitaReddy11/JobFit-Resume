@@ -12,6 +12,7 @@ client = Groq(api_key=api_key)
 def extract_job_description_details(job_description: str, max_retries=5):
     client = Groq(api_key=api_key)
 
+
     prompt = f"""
     Please extract the following information from the job description and format it as JSON with the following keys:
     - "role"
@@ -28,6 +29,7 @@ def extract_job_description_details(job_description: str, max_retries=5):
     Job Description:
     {job_description}
     """
+
     for attempt in range(max_retries):
         try:
             completion = client.chat.completions.create(
@@ -58,6 +60,7 @@ def extract_job_description_details(job_description: str, max_retries=5):
     ### Output:
     Provide only the JSON object.
     """
+   
     for attempt in range(max_retries):
         try:
             completion = client.chat.completions.create(
@@ -79,7 +82,6 @@ def extract_job_description_details(job_description: str, max_retries=5):
                 print("Max retries reached, exiting.")
                 return None
 
-    # Save JSON to file
     try:
         json_data = json.loads(second_output)
         with open('job_description.json', 'w') as outfile:

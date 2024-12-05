@@ -14,6 +14,7 @@ client = Groq(api_key=api_key)
 
 def analyze_exp(candidate_profile: dict, job_description: dict, max_trials: int = 5) -> None:
     client = Groq(api_key=api_key)
+ 
     prompt = f"""
     You are an expert resume writer focused on optimizing profiles for ATS (Applicant Tracking System) compliance and job application success. Your task is to enhance the candidate's "Experience" section based on the provided job description:
 
@@ -22,7 +23,7 @@ def analyze_exp(candidate_profile: dict, job_description: dict, max_trials: int 
 
     2. **Optimize the Candidate’s Experience Section**:
        - Carefully review the "Experience" section and rewrite each bullet point to align with the job description and ATS compatibility.
-       - Follow the STAR method (Situation, Task, Action, Result) format to describe each experience.
+       - Follow the STAR method to ensure each experience is well-structured
        - Use strong action verbs, quantify achievements if metrics are available, and prioritize relevance.
        - Avoid repetition of action verbs and overuse of words.
        - Ensure each bullet point aligns with the job description and highlights the candidate's relevant skills and achievements.
@@ -45,8 +46,9 @@ def analyze_exp(candidate_profile: dict, job_description: dict, max_trials: int 
     """
 
     try:
+      
         completion = client.chat.completions.create(
-            model="llama3-70b-8192", 
+            model="llama3-70b-8192",  
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7,
             max_tokens=2048,
@@ -86,6 +88,8 @@ def analyze_exp(candidate_profile: dict, job_description: dict, max_trials: int 
             return
 
         second_output = second_response.choices[0].message.content
+
+      
         for attempt in range(max_trials):
             try:
                 extracted_json = json.loads(second_output.strip())

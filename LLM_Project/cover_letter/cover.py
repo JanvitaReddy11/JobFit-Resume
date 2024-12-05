@@ -13,16 +13,15 @@ api_key = os.getenv('GROQ_API_KEY')
 client = Groq(api_key=api_key)
 
 class PDF(FPDF):
-
     def header(self):
         if self.page_no() == 1:
             self.set_font('Arial', 'B', 14)
             self.cell(0, 12, 'Cover Letter', align='C', ln=1)
-            self.ln(10) 
+            self.ln(10)  
 
 def generate_cover_letter(job_description: dict, resume: dict) -> None:
     client = Groq(api_key=api_key)
-  
+
     prompt = f"""
     You are an expert cover letter writer. Write a personalized cover letter for the following job description and resume:
 
@@ -37,7 +36,7 @@ def generate_cover_letter(job_description: dict, resume: dict) -> None:
     'Dear Hiring Manager'
     - First paragraph: Introduce the candidate and their background, highlighting relevant experience and skills.
     - Second paragraph: Detail experiences and projects, aligning them with the job requirements. Highlight how the projects and experience align with the job role.
-    - Third paragraph: Explain why the candidate is ideal for the job and the company.
+    - Third paragraph:  Emphasize the candidate's genuine interest  and its mission, and explain why this role excites the candidate.
     - Be professional, concise, and tailored to the job requirements.
 
     Thanking you,
@@ -45,6 +44,7 @@ def generate_cover_letter(job_description: dict, resume: dict) -> None:
     """
 
     try:
+ 
         completion = client.chat.completions.create(
             model="llama3-70b-8192", 
             messages=[{"role": "user", "content": prompt}],
@@ -54,6 +54,8 @@ def generate_cover_letter(job_description: dict, resume: dict) -> None:
             stream=False,
             stop=None,
         )
+
+
         if completion.choices and completion.choices[0].message:
             cover_letter = completion.choices[0].message.content
 
@@ -63,6 +65,7 @@ def generate_cover_letter(job_description: dict, resume: dict) -> None:
             else:
                 cover_letter = cover_letter[start_index:]        
 
+          
             pdf = PDF()
             pdf.set_auto_page_break(auto=True, margin=15)
             pdf.add_page()
@@ -70,7 +73,7 @@ def generate_cover_letter(job_description: dict, resume: dict) -> None:
             pdf.set_right_margin(20)
             pdf.set_font('Arial', size=10)
 
-
+           
             for line in cover_letter.splitlines():
                 pdf.multi_cell(0, 5, line, border=0, align='J')
 

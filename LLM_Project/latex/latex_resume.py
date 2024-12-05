@@ -1,5 +1,10 @@
 def latex_resume(candidate_data, output_filename='resume.tex'):
-  
+    """
+    Generates a LaTeX resume file based on candidate data.
+
+    :param candidate_data: Dictionary containing candidate information.
+    :param output_filename: Name of the output LaTeX file.
+    """
     latex_content = r"""
     \documentclass{resume}
 
@@ -47,11 +52,17 @@ def latex_resume(candidate_data, output_filename='resume.tex'):
 
     # Projects Section
     latex_content += r"\begin{rSection}{Projects}" + "\n"
-    for project in candidate_data['projects']['projects']:
+    proj = candidate_data.get('projects', [])
+
+
+    if isinstance(proj, dict) and 'projects' in proj:
+        proj = proj['projects']
+
+    for project in proj:
         latex_content += r"\vspace{-3pt}" + "\n"
         latex_content += f"""
-\\begin{{rSubsectionProj}}{{{project['title']}}}\n
-"""
+    \\begin{{rSubsectionProj}}{{{project['title']}}}\n
+    """
         for detail in project['description']:
             latex_content += r"\vspace{-3pt}" + "\n"
             latex_content += f"\\item {detail}\n"

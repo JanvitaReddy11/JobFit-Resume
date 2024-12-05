@@ -13,6 +13,7 @@ client = Groq(api_key=api_key)
 
 
 def analyze_projects(candidate_proj: dict, job_description: dict) -> None:
+   
     client = Groq(api_key=api_key)
     prompt = f"""
     You are an expert resume writer and a professional ATS (Applicant Tracking System) optimization specialist. Your task is to enhance the candidate's "Project" section in their profile to make it more aligned with the provided job description. Follow the steps below carefully:
@@ -26,7 +27,7 @@ def analyze_projects(candidate_proj: dict, job_description: dict) -> None:
        - For each bullet point:
          - Start with a strong, impactful action verb (e.g., "Led," "Developed," "Implemented").
          - Follow the STAR method to ensure each project is well-structured:
-         - Quantify achievements wherever possible using existing metrics, but **do not add new metrics**.
+         - **do not invent new metrics or figures**.
          - Emphasize relevant skills, technologies, software, and accomplishments that align with the job description.
          - Avoid repetition of action verbs, ensuring each sentence introduces a new verb for variety.
          - Ensure that the content aligns closely with the job description and highlights the candidate's most relevant skills.
@@ -38,7 +39,7 @@ def analyze_projects(candidate_proj: dict, job_description: dict) -> None:
        - Avoid exaggerations—keep the information truthful while optimizing the content for clarity and ATS compatibility.
 
     4. **Format the Output**:
-       - Return the optimized "Project" section in JSON format, structured in the same way as the candidate's original profile (e.g., under the "project" section).
+       - Return the optimized JSON file, structured in the same way as the candidate's original profile.
        - Ensure the response is clearly formatted and valid JSON without any extra comments or explanations.
 
     ### Input: Candidate Profile
@@ -54,8 +55,9 @@ def analyze_projects(candidate_proj: dict, job_description: dict) -> None:
     """
 
     try:
+       
         completion = client.chat.completions.create(
-            model="llama3-70b-8192", 
+            model="llama3-70b-8192",  
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7,
             max_tokens=2048,
@@ -91,21 +93,24 @@ def analyze_projects(candidate_proj: dict, job_description: dict) -> None:
             if not second_output:
                 print("Second LLM did not produce a valid response.")
                 return
+
+            
             retries = 5
             for attempt in range(retries):
                 try:
                     extracted_json = json.loads(second_output.strip())
+                    
                     with open("project.json", "w") as file:
                         json.dump(extracted_json, file, indent=4)
                     
                     print("Optimized project JSON saved to 'project.json'.")
-                    break  
+                    break 
 
                 except json.JSONDecodeError as e:
                     print(f"Error parsing JSON (Attempt {attempt + 1}/{retries}): {e}")
                     print(f"Invalid JSON output: {second_output}")
-                    if attempt < retries - 1:  
-                        time.sleep(2) 
+                    if attempt < retries - 1: 
+                        time.sleep(2)  
                     else:
                         print("Max retries reached. Could not parse the JSON.")
                         return

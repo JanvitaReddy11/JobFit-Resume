@@ -5,7 +5,7 @@ import os
 from dotenv import load_dotenv
 from groq import Groq
 from json_parser import extract_resume_data, update_resume
-from latex.latex_format import process_json
+from latex.latex_format import process_json, compile_latex
 from latex.latex_resume import latex_resume
 from proj.project import analyze_projects
 from exp.experience import analyze_exp
@@ -15,9 +15,9 @@ from chatbot import handle_conversation, initialize_prompt_template,compile_appl
 from langchain_core.messages import HumanMessage, AIMessage
 from job_desc.jd_parser import extract_job_description_details
 
-
 load_dotenv()
 groq_api_key = os.getenv('GROQ_API_KEY')
+
 client = Groq(api_key=groq_api_key)
 
 TEMP_RESUME_PATH = "temp_resume.pdf"
@@ -26,7 +26,8 @@ COVER_LETTER_PATH = "cover_letter.pdf"
 RESUME_JSON_PATH = "resume.json"
 JD_PATH = "job_description.json"
 
-st.title("Resume Builder")
+
+st.title("JobFit Resume")
 
 st.sidebar.header("Upload Your Resume")
 uploaded_file = st.sidebar.file_uploader("Upload your PDF Resume", type=["pdf"])
@@ -53,26 +54,25 @@ def load_json_file(file_path):
             return json.load(f)
     return None
 
-
 def save_json_file(data, file_path):
     with open(file_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
 
-
 if uploaded_file and submit_button:
-   
     if not job_description.strip():
         st.warning("Job description cannot be empty.")
     else:
         try:
             with open(TEMP_RESUME_PATH, "wb") as f:
                 f.write(uploaded_file.read())
+
             extract_resume_data(TEMP_RESUME_PATH, max_retries=5)
             extract_job_description_details(job_description)
             st.session_state.resume_json = load_json_file(RESUME_JSON_PATH)
             st.session_state.job_description_json = load_json_file(RESUME_JSON_PATH)
 
+            
             if not st.session_state.resume_json:
                 st.error("Error extracting data from the uploaded resume. Please try again.")
             else:
@@ -104,7 +104,6 @@ if st.session_state.resume_json and st.session_state.job_description:
                 analyze_projects(candidate_proj,st.session_state.job_description_json)
                 analyze_exp(candidate_exp, st.session_state.job_description_json)
                 analyze_skills(candidate_skills, st.session_state.job_description_json)
-
                 exp_json = load_json_file("experience.json")
                 proj_json = load_json_file("project.json")
                 skill_json = load_json_file("skills.json")
@@ -123,6 +122,7 @@ if st.session_state.resume_json and st.session_state.job_description:
                    escaped_resume = json.load(f)
 
                 latex_resume(escaped_resume)
+                compile_latex("resume.tex")
 
                 st.session_state.document_generated = True
                 time.sleep(5)
@@ -156,13 +156,15 @@ if "user_input1" not in st.session_state:
     st.session_state.user_input1 = ""  
 
 if "response_generated" not in st.session_state:
-    st.session_state.response_generated = False
+    st.session_state.response_generated = False  
 
 if "threads" not in st.session_state:
     st.session_state.threads = {}
 
 
+
 st.title("Job Assistant")
+
 user_input1 = st.text_area("Ask a question", value=st.session_state.user_input1, key="user_input1")
 if user_input1 != st.session_state.user_input1:
         st.session_state.user_input1 = user_input1
@@ -174,15 +176,17 @@ if st.button('Ask') and st.session_state.user_input1.strip():
         if thread_id not in st.session_state.threads:
             print('Entering the first loop')
             st.session_state.threads[thread_id] = {}  
+
             app = compile_application()  
             config = {"configurable": {"thread_id": thread_id}}  
             st.session_state.threads[thread_id] = {
-                "app": app, 
+                "app": app,
                 "config": config  
             }
 
             context.append(HumanMessage(content=f"Here is the resume: {json.dumps(st.session_state.resume_json)}"))
             context.append(HumanMessage(content=f"Here is the job description: {json.dumps(st.session_state.job_description_json)}"))
+            
             
             output = app.invoke({"messages": context}, config)
 
@@ -197,7 +201,6 @@ if st.button('Ask') and st.session_state.user_input1.strip():
             st.session_state.job_description,
             st.session_state.threads,app,config
         )
-
         st.session_state.response_generated = True
         st.session_state.chatbot_response = response
         st.write(response)

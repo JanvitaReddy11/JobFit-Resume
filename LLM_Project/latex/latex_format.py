@@ -31,7 +31,7 @@ def escape_latex_special_chars(text):
 
 
 def process_json(data):
-
+  
     if isinstance(data, dict):
         return {escape_latex_special_chars(key): process_json(value) for key, value in data.items()}
     elif isinstance(data, list):
@@ -40,4 +40,19 @@ def process_json(data):
         return escape_latex_special_chars(data)
     else:
         return data
+    
+
+def compile_latex(filename):
+    try:
+        result = subprocess.run(
+            ["pdflatex", filename],
+            check=True,  
+            capture_output=True,  
+            text=True 
+        )
+        print("Compilation Successful!")
+        print(result.stdout) 
+    except subprocess.CalledProcessError as e:
+        print("Error during compilation:")
+        print(e.stderr)  
 
